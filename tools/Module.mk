@@ -18,7 +18,7 @@ else
 TOOLS_LDFLAGS	:= -L$(LIB_DIR) -li2c
 endif
 
-TOOLS_TARGETS	:= i2cdetect i2cdump i2cset i2cget
+TOOLS_TARGETS	:= i2cdetect i2cdump i2cdumpc i2cset i2cget
 
 #
 # Programs
@@ -28,6 +28,9 @@ $(TOOLS_DIR)/i2cdetect: $(TOOLS_DIR)/i2cdetect.o $(TOOLS_DIR)/i2cbusses.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(TOOLS_LDFLAGS)
 
 $(TOOLS_DIR)/i2cdump: $(TOOLS_DIR)/i2cdump.o $(TOOLS_DIR)/i2cbusses.o $(TOOLS_DIR)/util.o
+	$(CC) $(LDFLAGS) -o $@ $^ $(TOOLS_LDFLAGS)
+
+$(TOOLS_DIR)/i2cdumpc: $(TOOLS_DIR)/i2cdumpc.o $(TOOLS_DIR)/i2cbusses.o $(TOOLS_DIR)/util.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(TOOLS_LDFLAGS)
 
 $(TOOLS_DIR)/i2cset: $(TOOLS_DIR)/i2cset.o $(TOOLS_DIR)/i2cbusses.o $(TOOLS_DIR)/util.o
@@ -44,6 +47,9 @@ $(TOOLS_DIR)/i2cdetect.o: $(TOOLS_DIR)/i2cdetect.c $(TOOLS_DIR)/i2cbusses.h vers
 	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
 
 $(TOOLS_DIR)/i2cdump.o: $(TOOLS_DIR)/i2cdump.c $(TOOLS_DIR)/i2cbusses.h $(TOOLS_DIR)/util.h version.h $(INCLUDE_DIR)/i2c/smbus.h
+	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
+
+$(TOOLS_DIR)/i2cdumpc.o: $(TOOLS_DIR)/i2cdumpc.c $(TOOLS_DIR)/i2cbusses.h $(TOOLS_DIR)/util.h version.h $(INCLUDE_DIR)/i2c/smbus.h
 	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
 
 $(TOOLS_DIR)/i2cset.o: $(TOOLS_DIR)/i2cset.c $(TOOLS_DIR)/i2cbusses.h $(TOOLS_DIR)/util.h version.h $(INCLUDE_DIR)/i2c/smbus.h
